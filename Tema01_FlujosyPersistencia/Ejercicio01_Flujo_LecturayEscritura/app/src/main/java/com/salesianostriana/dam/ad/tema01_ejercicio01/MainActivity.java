@@ -12,6 +12,17 @@ import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 
+/** (1) Flujo de lectura y escritura
+    Implementar una aplicación Android que realice las siguientes tareas:
+    Debe abrir un flujo de salida hacia un fichero en memoria interna, llamado "numeros.dat", 
+    y debe imprimir en él los 256 primeros números enteros (comenzando en cero). 
+    Al finalizar, debe cerrar el flujo.
+    
+    Posteriormente, debe abrir un flujo de entrada, leyendo el fichero anterior; 
+    conforme vaya leyendo el fichero, debe imprimir los números en el Log.
+    
+    **/
+    
 public class MainActivity extends Activity {
     private FileOutputStream fos;
     private FileInputStream fin;
