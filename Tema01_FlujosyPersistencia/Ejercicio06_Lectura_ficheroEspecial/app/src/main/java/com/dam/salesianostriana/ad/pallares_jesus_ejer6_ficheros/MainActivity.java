@@ -12,6 +12,30 @@ import java.io.DataInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 
+ /**
+  (6) Lectura de un fichero de imagen con formato especial
+  
+  Supongamos que existe un formato de fichero, que permite almacenar imágenes en escala de grises, 
+  y que tiene la siguiente estructura
+
+    Un código mágico, almacenado como un entero, que identifica este tipo de fichero. 
+    El valor concreto para este tipo de 1234.
+    Una cadena de caracteres, que puede almacenar comentarios sobre la imagen
+    Un valor entero, que es el ancho de la imagen en pixels
+    Un valor entero, que es el alto de la imagen en pixels.
+    A partir de aquí, viene una sucesión de valores de tipo byte. Estos valores marcarán un número, 
+    entre 0 y 255, con el nivel de gris para cada pixel. La cantidad de elementos que nos encontraremos 
+    en este punto estará determinada por los valores recogidos en el punto 2 y en el punto 3.
+
+    Para gestionar ficheros de este tipo, vamos a crear una clase, que tenga como 
+    atributos los valores necesarios para almacenar todos los datos de una imagen de este formato.
+    
+    Implementar una aplicación que sea capaz de leer, desde un fichero dado.
+    
+    Los ficheros.dat son los que se adjuntan en el ejercicio.
+  * */
+ 
+
 public class MainActivity extends AppCompatActivity {
 
     TextView fichero;
