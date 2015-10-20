@@ -16,6 +16,23 @@ import java.net.URL;
 import java.net.URLConnection;
 import java.util.concurrent.TimeUnit;
 
+/**
+(3) Tamaño de un fichero descargado (Buffering)
+
+Realizar las siguientes modificaciones en el ejercicio anterior
+
+1) Medir el tiempo de ejecución de la descarga del fichero. Para ello tenemos que:
+    Tomar el tiempo del sistema justo antes de comenzar la descarga.
+    Tomar el tiempo del sistema justo después de finalizar la descarga.
+    Restar ambas cantidades, y transformarlas a un formato humanizado.
+    Imprimir, junto con la cantidad de bytes, dicha cantidad.
+
+2) Implementar (en otro proyecto diferente, basado en la plantilla que se proporciona en el ejercicio anterior). 
+En este caso, la descarga del fichero la tendremos que hacer usando como flujo BufferedInputStream, 
+y un tamaño de flujo que determinará el alumno. En este caso, también hay que medir el tiempo de ejecución.
+ * */
+
+
 public class MainActivity extends AppCompatActivity {
 
     public InputStream getInputStreamFromURL(String url) throws IOException {
