@@ -22,6 +22,15 @@ import java.util.concurrent.TimeUnit;
 /**
  * @author Jesús Pallares
  */
+ 
+ /**
+ (5) Descarga de un fichero y almacenamiento en memoria interna
+
+    Realizar (en un proyecto nuevo) las modificaciones necesarias en el ejercicio 3 para que en lugar 
+    de solamente contar bytes y el tiempo de descarga, que el fichero quede almacenado en memoria interna. 
+    Como a priori no sabemos el nombre del fichero que vamos a descargar, lo llamaremos siempre download.file.
+    
+  * */
 public class MainActivity extends AppCompatActivity {
 
     public InputStream getInputStreamFromURL(String url) throws IOException {
