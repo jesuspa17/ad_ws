@@ -14,6 +14,36 @@ import java.io.InputStream;
 import java.net.URL;
 import java.net.URLConnection;
 
+/**
+(2) Tamaño de un fichero descargado
+
+Implementar una aplicación Android que descargue un fichero desde una URL dada, 
+y muestre por el log el tamaño (en bytes) del fichero descargado.
+
+Se proporciona el código fuente para la obtención de el flujo de entrada desde una URL.
+
+        public InputStream getInputStreamFromURL(String url) {
+           
+           URL u = new URL(url);
+           URLConnection con = u.openConnection();
+           InputStream is = con.getInputStream();
+        
+           return is;
+        }
+
+Hay que tener en cuenta que hay que añadir el siguiente código:
+
+    1) Por un lado, para poder abrir una conexión de red en el hilo principal, debemos añadir
+    
+        StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
+        
+        StrictMode.setThreadPolicy(policy);
+    
+    Por otro lado, también debemos modificar el fichero de manifiesto, para añadir el permiso de conexión a internet.
+    
+        <uses-permission android:name="android.permission.INTERNET"/>
+ * */
+
 public class MainActivity extends Activity {
 
     public InputStream getInputStreamFromURL(String url) throws IOException {
@@ -42,14 +72,7 @@ public class MainActivity extends Activity {
                     StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
                     StrictMode.setThreadPolicy(policy);
 
-                    InputStream is = new InputStream() {
-                        @Override
-                        public int read() throws IOException {
-                            return 0;
-                        }
-                    };
-
-                    is = getInputStreamFromURL(url.toString());
+                    InputStream is = getInputStreamFromURL(url.toString());
 
                     int tam = 0;
                     int numBytes;
