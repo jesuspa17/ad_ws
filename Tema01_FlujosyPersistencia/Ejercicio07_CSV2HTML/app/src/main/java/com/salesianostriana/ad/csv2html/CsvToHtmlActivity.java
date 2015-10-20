@@ -12,6 +12,46 @@ import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStreamReader;
 
+/**
+ 
+(7) CSV2HTML
+
+Implementar una aplicación que sea capaz de leer un fichero en formato CSV, y transformarlo en un documento 
+HTML (el cual será almacenado en una cadena de caracteres).
+
+En primer lugar, la app leerá el fichero desde la memoria externa, y tendrá que detectar 
+cual es el caracter separador, que podrá estar entre los siguiente:
+
+- coma (,)
+- punto y coma (;)
+- tabulador (\t)
+
+A partir de ahí, deberá leer los datos, y tendrá que procesarlos "al vuelo" en una tabla HTML, 
+que irá almacenando en una cadena de caracteres (se recomienda usar la clase StringBuilder). 
+Se recuerda que el código de una tabla HTML es, como mínimo el siguiente:
+        
+        <html>
+        <head>
+        </head>
+        <body>
+        <table>
+        <tr>
+        <td>...</td>
+        <td>...</td>
+        ....
+        </tr>
+        ....
+        </table>
+        </body>
+        </html>
+
+Posteriormente, pasaremos el contenido de la cadena al método muestraHTML, que visualizará el código en el Activity, 
+que dispone de un WebView.
+
+NOTA: Como se ha indicado antes, el procesamiento habrá que hacerlo al vuelo, es decir, 
+no se podrá usar ningún tipo de colección para leer todo el fichero y almacenarlo en la misma 
+(tipo String[][], List<List<String>> o similar).
+ * */
 public class CsvToHtmlActivity extends AppCompatActivity {
 
     WebView webView;
