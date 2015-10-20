@@ -22,6 +22,35 @@ import java.util.ArrayList;
 /**
  * @author Jesús Pallares
  */
+ 
+ /**
+  (4) Lista de la compra con DataInputStream / DataOutputStream
+  
+  Implementar una app que nos permita almacenar la lista de la compra. Para ello, nuestro MainActivity contará con los siguientes elementos en la interfaz de usuario:
+
+    Un EditText (concepto), que nos permitirá recoger que elemento vamos a comprar (patatas, huevos, leche).
+    Otro EditText (cantidad), que nos permitirá recoger la cantidad de elementos del tipo anterior que recojamos.
+    Un TextView (listaCompra), que nos permitirá mostrar nuestra compra. Deberá mostrar la información en el siguiente formato (se puede montar haciendo uso de un StringBuilder y añadir saltos de línea mediante \n).
+        
+        [5] Litros de leche
+        [1] Docena de huevos
+        [3] Barras de pan
+
+    Un Button (add): este botón realizará las siguientes tareas
+        Añadir al ArrayList<Integer> cantidades la cantidad recogida en el EditText correspondiente
+        Añadir al ArrayList<String> conceptos el concepto recogido en el EditText correspondiente
+    Un Button (save): este botón almacenará en un fichero en memoria interna, llamado listaCompra.dat, la información almacenada en ambos ArrayList. Haciendo uso de un DataOutputStream, iremos almacenando un entero, una cadena, un entero, ...
+    Un Button (reset): este botón reseteará los dos ArrayList (cantidades y conceptos), así como el TextView listaCompra.
+
+Definida la interfaz, la sistemática de la app será la siguiente:
+
+- El usuario comenzará a usar la app
+- Añadirá elementos con sus correspondientes cantidades a la lista de la compra.
+- Si desea almacenar esta lista en memoria interna, pulsará sobre el botón correspondiente.
+- Al entrar por segunda vez a la app, debe rescatar la lista de la compra que esté almacenada, y mostrarla en el correspondiente TextView
+- Si pulsa el botón de salvar sin ningún elemento, se vaciará el fichero.
+  **/
+
 public class MainActivity extends AppCompatActivity{
 
     //variables
