@@ -8,7 +8,7 @@
     <Button
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Abrir"
+        android:text="ABRIR NOTA"
         android:id="@+id/btn_abrir"
         android:layout_alignParentTop="true"
         android:layout_centerHorizontal="true" />
@@ -17,7 +17,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textAppearance="?android:attr/textAppearanceMedium"
-        android:text="Nombre archivo: "
+        android:text="Nombre nota: "
         android:id="@+id/textView"
         android:layout_marginTop="31dp"
         android:layout_below="@+id/btn_abrir"

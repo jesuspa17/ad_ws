@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Environment;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -40,7 +41,7 @@ import java.util.ArrayList;
  */
 
 public class MainActivity extends Activity {
-
+    //atributos
     final int FILE_CHOOSER = 1;
 
     Button btn_abrir;
@@ -55,40 +56,53 @@ public class MainActivity extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        //se rescatan los elementos del UI
         btn_abrir = (Button) findViewById(R.id.btn_abrir);
         btn_guardar = (Button) findViewById(R.id.btn_guardar);
-
         contenido = (EditText) findViewById(R.id.edit_contenido);
         nombre_archivo = (EditText) findViewById(R.id.edit_nombreTxt);
 
-
         btn_guardar.setOnClickListener(new View.OnClickListener(){
-        final String msg = "Ya existe el archivo";
             @Override
             public void onClick(View v) {
-                try {
+                if(nombre_archivo.getText().toString().isEmpty())
+                    Toast.makeText(MainActivity.this,"Introduzca el nombre de la nota", Toast.LENGTH_LONG).show();
+                else
+                    try {
+                        if(btn_guardar.getText().equals("GUARDAR CAMBIOS")){
+                            nombre_archivo.setEnabled(true);
+                            btn_guardar.setText("GUARDAR NOTA");
+                        }
+                        //nombre y contenido de la nota.
+                        String nombre = nombre_archivo.getText().toString();
+                        String cont = contenido.getText().toString();
+                        //ruta donde se guardará el archivo.
+                        String ruta_sd = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS).getPath();
 
-                    String nombre = nombre_archivo.getText().toString();
-                    String cont = contenido.getText().toString();
+                        if(nombre.contains(".txt")){
+                            nombre = nombre;
+                        }else{
+                            nombre = nombre + ".txt";
+                        }
+                        File f = new File(ruta_sd, nombre);
+                        //flujo de escritura
+                        OutputStreamWriter fout= new OutputStreamWriter(new FileOutputStream(f));
+                        fout.write(cont);
+                        fout.close();
 
-                    File ruta_sd = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_NOTIFICATIONS);
-                    File f = new File(ruta_sd, nombre);
-
-                    OutputStreamWriter fout= new OutputStreamWriter(new FileOutputStream(f));
-                    fout.write(cont);
-                    fout.close();
+                        Log.i("ARCHIVO CREADO:",nombre);
 
 
-                } catch (FileNotFoundException e) {
-                    e.printStackTrace();
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }finally {
+                    } catch (FileNotFoundException e) {
+                        e.printStackTrace();
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }finally {
 
-                    nombre_archivo.setText("");
-                    contenido.setText("");
+                        nombre_archivo.setText("");
+                        contenido.setText("");
 
-                }
+                    }
 
             }
         });
@@ -101,7 +115,6 @@ public class MainActivity extends Activity {
                 extensions.add(".txt");
                 intent.putStringArrayListExtra("filterFileExtension", extensions);
                 startActivityForResult(intent, FILE_CHOOSER);
-
             }
         });
 
@@ -132,23 +145,25 @@ public class MainActivity extends Activity {
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         if ((requestCode == FILE_CHOOSER) && (resultCode == -1)) {
+            //obtiene el fichero seleccionado a través del FileChooser.
             String fileSelected = data.getStringExtra("fileSelected");
             String nom = data.getStringExtra("nomArchivo");
+            btn_guardar.setText("GUARDAR CAMBIOS");
+            nombre_archivo.setEnabled(false);
             filePathSelected = fileSelected;
-            Toast.makeText(this, fileSelected, Toast.LENGTH_SHORT).show();
 
+            //flujo de lectura del archivo seleccionado.
             try {
-
                 BufferedReader br = new BufferedReader(new FileReader(fileSelected));
                 nombre_archivo.setText(nom);
                 String linea = "";
                 StringBuilder texto_final = new StringBuilder(linea);
 
-                while(linea != null){
+                while((linea = br.readLine()) != null){
                     texto_final.append(linea);
-                    texto_final.append(System.getProperty("line.separator"));
-                    linea = br.readLine();
+                    texto_final.append("\n");
                 }
+
                 contenido.setText(texto_final);
                 br.close();
 
