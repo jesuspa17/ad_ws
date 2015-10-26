@@ -2,7 +2,7 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/Pallares_Jesus_LoginPreferences.iml" filepath="$PROJECT_DIR$/Pallares_Jesus_LoginPreferences.iml" />
+      <module fileurl="file://$PROJECT_DIR$/Ejercicio09_LoginPreferences.iml" filepath="$PROJECT_DIR$/Ejercicio09_LoginPreferences.iml" />
       <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
     </modules>
   </component>
