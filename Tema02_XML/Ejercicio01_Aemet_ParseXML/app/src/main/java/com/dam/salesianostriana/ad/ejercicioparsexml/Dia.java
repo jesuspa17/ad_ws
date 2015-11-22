@@ -1,7 +1,10 @@
 package com.dam.salesianostriana.ad.ejercicioparsexml;
 
+import org.simpleframework.xml.Attribute;
 import org.simpleframework.xml.Element;
 import org.simpleframework.xml.Root;
+
+import java.util.Date;
 
 /**
  * Created by Jesús Pallares on 20/11/2015.
@@ -9,24 +12,24 @@ import org.simpleframework.xml.Root;
 @Root(strict = false)
 public class Dia {
 
-    @Element
-    private String fecha;
+    @Attribute(name="fecha")
+    private Date fecha;
 
-    @Element
+    @Element(name="temperatura")
     private Temperatura temperatura;
 
     public Dia(){}
 
-    public Dia(String fecha, Temperatura temperatura) {
+    public Dia(Date fecha, Temperatura temperatura) {
         this.fecha = fecha;
         this.temperatura = temperatura;
     }
 
-    public String getFecha() {
+    public Date getFecha() {
         return fecha;
     }
 
-    public void setFecha(String fecha) {
+    public void setFecha(Date fecha) {
         this.fecha = fecha;
     }
 

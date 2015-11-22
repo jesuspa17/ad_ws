@@ -9,31 +9,31 @@ import org.simpleframework.xml.Root;
 @Root(strict = false)
 public class Temperatura {
 
-    @Element
-    private double temp_max;
-    @Element
-    private double temp_min;
+    @Element(name="maxima")
+    private String temp_max;
+    @Element(name="minima")
+    private String temp_min;
 
     public Temperatura(){}
 
-    public Temperatura(double temp_max, double temp_min) {
+    public Temperatura(String temp_max, String temp_min) {
         this.temp_max = temp_max;
         this.temp_min = temp_min;
     }
 
-    public double getTemp_max() {
+    public String getTemp_max() {
         return temp_max;
     }
 
-    public void setTemp_max(double temp_max) {
+    public void setTemp_max(String temp_max) {
         this.temp_max = temp_max;
     }
 
-    public double getTemp_min() {
+    public String getTemp_min() {
         return temp_min;
     }
 
-    public void setTemp_min(double temp_min) {
+    public void setTemp_min(String temp_min) {
         this.temp_min = temp_min;
     }
 

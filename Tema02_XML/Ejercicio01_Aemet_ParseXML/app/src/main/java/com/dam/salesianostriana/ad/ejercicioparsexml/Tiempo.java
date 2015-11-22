@@ -9,15 +9,18 @@ import org.simpleframework.xml.Root;
 @Root(strict = false) //se pone esto para cojer la información que queramos del xml.
 public class Tiempo {
 
-    @Element
+    @Element(name="nombre")
+    private String nombre;
+    @Element(name="provincia")
     private String nombre_provincia;
 
-    @Element
+    @Element(name="prediccion")
     private Prediccion predicciones;
 
     public Tiempo(){}
 
-    public Tiempo(String nombre_provincia, Prediccion predicciones) {
+    public Tiempo(String nombre, String nombre_provincia, Prediccion predicciones) {
+        this.nombre = nombre;
         this.nombre_provincia = nombre_provincia;
         this.predicciones = predicciones;
     }
@@ -38,10 +41,20 @@ public class Tiempo {
         this.predicciones = predicciones;
     }
 
+
+    public String getNombre() {
+        return nombre;
+    }
+
+    public void setNombre(String nombre) {
+        this.nombre = nombre;
+    }
+
     @Override
     public String toString() {
         return "Tiempo{" +
-                "nombre_provincia='" + nombre_provincia + '\'' +
+                "nombre='" + nombre + '\'' +
+                ", nombre_provincia='" + nombre_provincia + '\'' +
                 ", predicciones=" + predicciones +
                 '}';
     }

@@ -11,7 +11,7 @@ import java.util.List;
 @Root(strict = false)
 public class Prediccion {
 
-    @ElementList
+    @ElementList(name="dia", inline = true)
     private List<Dia> lista_dias;
 
     public Prediccion(){}

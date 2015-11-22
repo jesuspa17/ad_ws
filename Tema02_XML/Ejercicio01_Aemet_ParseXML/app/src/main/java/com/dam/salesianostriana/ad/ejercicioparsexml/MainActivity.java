@@ -4,69 +4,51 @@ import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.ListView;
 
 import org.simpleframework.xml.Serializer;
 import org.simpleframework.xml.core.Persister;
 
-import java.io.BufferedReader;
 import java.io.IOException;
-import java.io.InputStreamReader;
-import java.io.Reader;
+import java.io.InputStream;
 import java.net.MalformedURLException;
 import java.net.URL;
 
 public class MainActivity extends AppCompatActivity {
 
+    ListView lista_tempraturas;
+    Toolbar toolbar;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
-        //URL: http://www.aemet.es/xml/municipios/localidad_41091.xml
-
+        toolbar.setTitle("");
+        lista_tempraturas = (ListView) findViewById(R.id.listView);
         new GetDataTimeTask().execute();
 
 
-    }
-
-    private static String leer(Reader rd) throws IOException {
-        StringBuilder sb = new StringBuilder();
-        int cp;
-        while ((cp = rd.read()) != -1) {
-            sb.append((char) cp);
-        }
-        return sb.toString();
     }
 
     private class GetDataTimeTask extends AsyncTask<Void, Void, Tiempo>{
 
         @Override
         protected Tiempo doInBackground(Void... params) {
+
             Tiempo tiempo = null;
 
             try {
-                URL url = new URL("http://www.aemet.es/xml/municipios/localidad_41091.xml");
-
-                BufferedReader br = new BufferedReader(new InputStreamReader(url.openStream()));
+                URL url = new URL("http://www.aemet.es/xml/municipios/localidad_41067.xml");
+                InputStream is = url.openStream();
 
                 Serializer serializer = new Persister();
-
-                String xml = leer(br);
-
-                Log.i("XML3","XML: " + xml);
-
                 tiempo = new Tiempo();
-
-                tiempo = serializer.read(Tiempo.class,br);
-
-                //Log.i("XML","XML: " + br.toString());
-
-
+                tiempo = serializer.read(Tiempo.class,is);
 
             } catch (MalformedURLException e) {
                 e.printStackTrace();
@@ -76,7 +58,15 @@ public class MainActivity extends AppCompatActivity {
                 e.printStackTrace();
             }
 
-            return null;
+            return tiempo;
+        }
+
+        @Override
+        protected void onPostExecute(Tiempo tiempo) {
+            super.onPostExecute(tiempo);
+            toolbar.setTitle(tiempo.getNombre()+" ("+tiempo.getNombre_provincia()+")");
+            Adaptador adaptador =new Adaptador(MainActivity.this,tiempo.getPredicciones().getLista_dias());
+            lista_tempraturas.setAdapter(adaptador);
         }
     }
 
