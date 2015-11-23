@@ -16,6 +16,14 @@ import java.io.InputStream;
 import java.net.MalformedURLException;
 import java.net.URL;
 
+/**
+Ejercico 1: Parser para XML aemet: temperaturas
+Implementar una aplicación que sea capaz de parsear un fichero 
+(por ejemplo http://www.aemet.es/xml/municipios/localidad_41091.xml) 
+y que sea capaz de mostrar la la población y la provincia, y una lista 
+(ListView, RecyclerView....) con la temperatura mínima y máxima para cada día.
+ * */
+
 public class MainActivity extends AppCompatActivity {
 
     ListView lista_tempraturas;
