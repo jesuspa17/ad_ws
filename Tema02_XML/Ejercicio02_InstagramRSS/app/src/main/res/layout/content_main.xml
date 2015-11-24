@@ -31,7 +31,6 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_gravity="left|top"
-        android:padding="5dp"
         android:layout_below="@+id/editTextBuscar"
         android:layout_alignEnd="@+id/btn_buscar"
         android:layout_alignParentBottom="true" />

@@ -3,7 +3,7 @@ package com.dam.salesianostriana.pmdm.pallaresjesus_ejercicio02_instagramrss;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
@@ -12,6 +12,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.Toast;
 
 import org.simpleframework.xml.Serializer;
 import org.simpleframework.xml.core.Persister;
@@ -20,7 +21,11 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.net.MalformedURLException;
 import java.net.URL;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
+import java.util.Locale;
 
 /**
  Ejercicio 2: Instagram RSS Client
@@ -73,42 +78,44 @@ public class MainActivity extends AppCompatActivity {
 
         mRecyclerView = (RecyclerView) findViewById(R.id.my_recycler_view);
         mRecyclerView.setHasFixedSize(true);
-        mLayoutManager = new LinearLayoutManager(this);
+        mLayoutManager = new GridLayoutManager(this, 3);
         mRecyclerView.setLayoutManager(mLayoutManager);
 
         buscar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
-                new GetImagesTask().execute();
-
+                String zona = direccion.getText().toString();
+                if(!zona.isEmpty()) {
+                    new GetImagesTask().execute(zona);
+                }else {
+                    Toast.makeText(MainActivity.this,"Introduce una zona",Toast.LENGTH_SHORT).show();
+                }
             }
         });
 
-
-
     }
 
-    private class GetImagesTask extends AsyncTask<Void,Void,Rss>{
+    private class GetImagesTask extends AsyncTask<String,Void,Rss>{
 
         @Override
-        protected Rss doInBackground(Void... params) {
+        protected Rss doInBackground(String... params) {
 
             Rss rss = null;
+            if(params[0]!=null) {
+                try {
+                    URL url = new URL("http://iconosquare.com/tagFeed/" + params[0]);
+                    InputStream is = url.openStream();
+                    Serializer serializer = new Persister();
+                    rss = new Rss();
+                    rss = serializer.read(Rss.class, is, false);
 
-            try {
-                URL url = new URL("http://iconosquare.com/tagFeed/triana");
-                InputStream is = url.openStream();
-                Serializer serializer = new Persister();
-                rss = new Rss();
-                rss = serializer.read(Rss.class,is,false);
-
-            } catch (MalformedURLException e) {
-                e.printStackTrace();
-            } catch (IOException e) {
-                e.printStackTrace();
-            } catch (Exception e) {
-                e.printStackTrace();
+                } catch (MalformedURLException e) {
+                    e.printStackTrace();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
             }
 
             return rss;
@@ -126,8 +133,22 @@ public class MainActivity extends AppCompatActivity {
                 String autor = rss.getChannel().getItem().get(i).getAutor();
                 String fecha = rss.getChannel().getItem().get(i).getPubdate();
                 //Tue, 24 Nov 2015 09:43:21 +0100
+                SimpleDateFormat f = new SimpleDateFormat("EEE, dd MMM yyyy HH:mm:ss Z", Locale.US);
 
-                imagenes.add(new ItemImagen(imagen,autor,fecha));
+                SimpleDateFormat f1 = new SimpleDateFormat("dd/MM/yyyy");
+
+                String fecha_format = "";
+                try {
+                    Date date = f.parse(fecha);
+                    Log.i("DATE", date.toString());
+                    fecha_format = f1.format(date);
+                    Log.i("DATE", fecha_format);
+
+                } catch (ParseException e) {
+                    e.printStackTrace();
+                }
+
+                imagenes.add(new ItemImagen(imagen,autor,fecha_format));
             }
 
             mAdapter = new BloqueAdapter(MainActivity.this,imagenes);
