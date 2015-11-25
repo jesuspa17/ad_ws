@@ -17,12 +17,16 @@ public class Tiempo {
     @Element(name="prediccion")
     private Prediccion predicciones;
 
+    @Element(name = "elaborado")
+    private String elaborado;
+
     public Tiempo(){}
 
-    public Tiempo(String nombre, String nombre_provincia, Prediccion predicciones) {
+    public Tiempo(String nombre, String nombre_provincia, Prediccion predicciones, String elaborado) {
         this.nombre = nombre;
         this.nombre_provincia = nombre_provincia;
         this.predicciones = predicciones;
+        this.elaborado = elaborado;
     }
 
     public String getNombre_provincia() {
@@ -50,12 +54,21 @@ public class Tiempo {
         this.nombre = nombre;
     }
 
+    public String getElaborado() {
+        return elaborado;
+    }
+
+    public void setElaborado(String elaborado) {
+        this.elaborado = elaborado;
+    }
+
     @Override
     public String toString() {
         return "Tiempo{" +
                 "nombre='" + nombre + '\'' +
                 ", nombre_provincia='" + nombre_provincia + '\'' +
                 ", predicciones=" + predicciones +
+                ", elaborado='" + elaborado + '\'' +
                 '}';
     }
 }
