@@ -1,0 +1,5 @@
+<resources>
+    <string name="app_name">Peluquería Antonio Peña</string>
+    <string name="action_settings">Ajustes</string>
+    <string name="title_activity_cliente">ClienteActivity</string>
+</resources>
