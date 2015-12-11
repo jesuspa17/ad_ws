@@ -12,15 +12,14 @@ import de.greenrobot.daogenerator.ToMany;
 public class GreenDaoGenerator {
     public static void main(String[] args) {
 
-        Schema schema = new Schema(1000, "de.greenrobot.daoexample");
+        Schema schema = new Schema(1000, "");
         createTables(schema);
         try {
-
 
             if (!Files.isDirectory(Paths.get("./src-gen")))
                 Files.createDirectory(Paths.get("./src-gen"));
 
-            new DaoGenerator().generateAll(schema, "../app/src/main/java/com/dam/salesianostriana/ad/ejercicio01_kilo/grendao");
+            new DaoGenerator().generateAll(schema, "./src-gen");
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -49,7 +48,7 @@ public class GreenDaoGenerator {
         alimCaja.addToOne(alimento, alimento_id);
 
         ToMany alimetoToAlimCaja = alimento.addToMany(alimento, alimento_id);
-        alimetoToAlimCaja.setName("alimenos");
+        alimetoToAlimCaja.setName("alimentos");
 
         Property caja_id = alimCaja.addLongProperty("caja_id").notNull().getProperty();
         alimCaja.addToOne(caja, caja_id);
