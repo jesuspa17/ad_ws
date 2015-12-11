@@ -41,6 +41,7 @@ public class GreenDaoGenerator {
 
         //Tabla alimCaja
         Entity alimCaja = schema.addEntity("AlimCaja");
+        //esto sobraria
         alimCaja.addIdProperty();
         alimCaja.addIntProperty("cantidad").notNull();
 
