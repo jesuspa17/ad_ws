@@ -5,7 +5,7 @@ android {
     buildToolsVersion "23.0.2"
 
     defaultConfig {
-        applicationId "com.dam.salesianostriana.ad.ejercicio01_opkilogreendao"
+        applicationId "com.dam.salesianostriana.ad.ejercicio01_operacionkilo"
         minSdkVersion 21
         targetSdkVersion 23
         versionCode 1
@@ -25,4 +25,5 @@ dependencies {
     compile 'com.android.support:appcompat-v7:23.1.1'
     compile 'com.android.support:design:23.1.1'
     compile 'de.greenrobot:greendao:2.0.0'
+    compile 'de.greenrobot:greendao-generator:2.0.0'
 }
