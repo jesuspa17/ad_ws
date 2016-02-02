@@ -20,6 +20,7 @@ import com.parse.ParseObject;
 import com.parse.ParseQuery;
 import com.parse.ParseQueryAdapter;
 
+import java.text.SimpleDateFormat;
 import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
@@ -123,7 +124,8 @@ public class MainActivity extends AppCompatActivity {
             TextView concepto = (TextView) v.findViewById(R.id.textView);
             TextView fecha = (TextView) v.findViewById(R.id.txtFecha);
 
-            fecha.setText(object.getDate("Fecha").toString());
+            SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy hh:mm a");
+            fecha.setText(sdf.format(object.getDate("Fecha").toString()));
             concepto.setText(object.getString("Concepto"));
 
             return v;
