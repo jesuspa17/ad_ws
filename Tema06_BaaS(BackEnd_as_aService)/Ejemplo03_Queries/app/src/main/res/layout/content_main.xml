@@ -22,7 +22,7 @@
             android:layout_width="30dp"
             android:layout_height="30dp"
             android:layout_weight="1"
-            android:id="@+id/imageView"
+            android:id="@+id/imageViewOrdenar"
             android:src="@drawable/sort"
             android:layout_gravity="center"/>
 
@@ -33,7 +33,8 @@
             android:text="HOY"
             android:textOn="HOY"
             android:textOff="HOY"
-            android:id="@+id/btn_hoy" />
+            android:id="@+id/btn_hoy"
+            android:checked="false" />
 
         <ToggleButton
             android:layout_width="wrap_content"

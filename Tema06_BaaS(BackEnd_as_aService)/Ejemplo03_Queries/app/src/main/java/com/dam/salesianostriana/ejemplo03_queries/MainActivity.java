@@ -8,6 +8,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.ToggleButton;
@@ -21,11 +22,14 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.GregorianCalendar;
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends AppCompatActivity{
 
     ToggleButton btn_todos, btn_hoy,btn_ayer,btn_tresDias;
+    ImageView img_ordenar;
     ListView lista;
     ParseQueryPersonalizado adapter;
+
+    int count;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -37,19 +41,20 @@ public class MainActivity extends AppCompatActivity {
         btn_hoy = (ToggleButton) findViewById(R.id.btn_hoy);
         btn_todos = (ToggleButton) findViewById(R.id.btn_todos);
         btn_ayer = (ToggleButton) findViewById(R.id.btn_ayer);
+        img_ordenar = (ImageView) findViewById(R.id.imageViewOrdenar);
         btn_tresDias = (ToggleButton) findViewById(R.id.btn_tresDias);
-
         lista = (ListView) findViewById(R.id.listView);
 
 
         btn_todos.setChecked(true);
-        lista.setAdapter(new ParseQueryPersonalizado(this, "Todo"));
+        obtenerTodas();
 
         //Botón muestra todas las notas.
         btn_todos.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                lista.setAdapter(new ParseQueryPersonalizado(MainActivity.this, "Todo"));
+
+                obtenerTodas();
                 btn_ayer.setChecked(false);
                 btn_hoy.setChecked(false);
                 btn_tresDias.setChecked(false);
@@ -63,30 +68,14 @@ public class MainActivity extends AppCompatActivity {
 
                 if(btn_hoy.isChecked()){
 
-                        adapter = new ParseQueryPersonalizado(MainActivity.this,new ParseQueryAdapter.QueryFactory<ParseObject>() {
-
-                            public ParseQuery<ParseObject> create() {
-                                ParseQuery query = new ParseQuery("Todo");
-
-                                Calendar cal = getFechaHoy();
-
-                                Date hoy = cal.getTime();
-                                cal.add(Calendar.DAY_OF_MONTH, 1);
-                                Date tomorrow= cal.getTime();
-
-                                query.whereGreaterThanOrEqualTo("Fecha", hoy);
-                                query.whereLessThan("Fecha", tomorrow);
-
-                            return query;
-                        }
-                    });
-
+                    obtenerNotasHoy();
                     lista.setAdapter(adapter);
                     btn_todos.setChecked(false);
                     btn_ayer.setChecked(false);
+                    btn_tresDias.setChecked(false);
 
                 }else{
-                    lista.setAdapter(new ParseQueryPersonalizado(MainActivity.this,"Todo"));
+                    obtenerTodas();
                 }
             }
         });
@@ -96,28 +85,18 @@ public class MainActivity extends AppCompatActivity {
         btn_ayer.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                if(btn_ayer.isChecked()){
 
-                adapter = new ParseQueryPersonalizado(MainActivity.this,new ParseQueryAdapter.QueryFactory<ParseObject>() {
-                    public ParseQuery<ParseObject> create() {
+                    obtenerNotasAyer();
+                    lista.setAdapter(adapter);
+                    btn_todos.setChecked(false);
+                    btn_hoy.setChecked(false);
+                    btn_tresDias.setChecked(false);
 
-                        ParseQuery query = new ParseQuery("Todo");
+                }else{
+                    obtenerTodas();
+                }
 
-                        Calendar cal = getFechaHoy();
-
-                        Date hoy = cal.getTime();
-                        cal.add(Calendar.DAY_OF_MONTH, -1);
-                        Date ayer= cal.getTime();
-
-                        query.whereLessThanOrEqualTo("Fecha", hoy);
-                        query.whereGreaterThan("Fecha", ayer);
-
-                        return query;
-                    }
-                });
-
-                lista.setAdapter(adapter);
-                btn_todos.setChecked(false);
-                btn_hoy.setChecked(false);
             }
         });
 
@@ -125,6 +104,32 @@ public class MainActivity extends AppCompatActivity {
         btn_tresDias.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                if(btn_tresDias.isChecked()){
+
+                    obtenerNotasTresDias();
+                    lista.setAdapter(adapter);
+                    btn_todos.setChecked(false);
+                    btn_hoy.setChecked(false);
+                    btn_ayer.setChecked(false);
+
+                }else{
+                    obtenerTodas();
+                }
+            }
+        });
+
+
+        img_ordenar.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                count++;
+                ordenarNotas();
+                lista.setAdapter(adapter);
+                btn_todos.setChecked(true);
+                btn_hoy.setChecked(false);
+                btn_ayer.setChecked(false);
+                btn_tresDias.setChecked(false);
 
             }
         });
@@ -142,7 +147,7 @@ public class MainActivity extends AppCompatActivity {
         return cal;
     }
 
-
+    //Adaptador usado para la lista
     class ParseQueryPersonalizado extends ParseQueryAdapter<ParseObject> {
 
         public ParseQueryPersonalizado(Context context, QueryFactory<ParseObject> queryFactory) {
@@ -169,6 +174,96 @@ public class MainActivity extends AppCompatActivity {
 
             return v;
         }
+    }
+
+
+    public void obtenerTodas(){
+        lista.setAdapter(new ParseQueryPersonalizado(MainActivity.this, "Todo"));
+    }
+
+
+    public void ordenarNotas(){
+
+        adapter = new ParseQueryPersonalizado(MainActivity.this,new ParseQueryAdapter.QueryFactory<ParseObject>() {
+            public ParseQuery<ParseObject> create() {
+
+                ParseQuery query = new ParseQuery("Todo");
+                if(count%2!=0){
+                    query.orderByAscending("Fecha");
+                }else{
+                    query.orderByDescending("Fecha");
+                }
+                
+                return query;
+            }
+        });
+
+    }
+
+    public void obtenerNotasHoy(){
+
+        adapter = new ParseQueryPersonalizado(MainActivity.this,new ParseQueryAdapter.QueryFactory<ParseObject>() {
+
+            public ParseQuery<ParseObject> create() {
+
+                ParseQuery query = new ParseQuery("Todo");
+
+                Calendar cal = getFechaHoy();
+
+                Date hoy = cal.getTime();
+                cal.add(Calendar.DAY_OF_MONTH, 1);
+                Date tomorrow= cal.getTime();
+
+                query.whereGreaterThanOrEqualTo("Fecha", hoy);
+                query.whereLessThan("Fecha", tomorrow);
+
+                return query;
+            }
+        });
+
+    }
+
+    public void obtenerNotasAyer(){
+        adapter = new ParseQueryPersonalizado(MainActivity.this,new ParseQueryAdapter.QueryFactory<ParseObject>() {
+            public ParseQuery<ParseObject> create() {
+
+                ParseQuery query = new ParseQuery("Todo");
+
+                Calendar cal = getFechaHoy();
+
+                Date hoy = cal.getTime();
+                cal.add(Calendar.DAY_OF_MONTH, -1);
+                Date ayer= cal.getTime();
+
+                query.whereLessThanOrEqualTo("Fecha", hoy);
+                query.whereGreaterThan("Fecha", ayer);
+
+                return query;
+            }
+        });
+
+    }
+
+
+    public void obtenerNotasTresDias(){
+
+        adapter = new ParseQueryPersonalizado(MainActivity.this, new ParseQueryAdapter.QueryFactory<ParseObject>() {
+            @Override
+            public ParseQuery<ParseObject> create() {
+
+                ParseQuery query = new ParseQuery("Todo");
+
+                Calendar cal = getFechaHoy();
+                Date hoy = cal.getTime();
+                cal.add(Calendar.DATE,3);
+                Date tres_siguientes = cal.getTime();
+
+                query.whereGreaterThan("Fecha",hoy);
+                query.whereLessThan("Fecha",tres_siguientes);
+
+                return query;
+            }
+        });
     }
 
     @Override
