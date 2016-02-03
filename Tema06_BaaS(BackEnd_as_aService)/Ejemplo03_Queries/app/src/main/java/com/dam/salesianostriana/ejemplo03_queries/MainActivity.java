@@ -53,7 +53,6 @@ public class MainActivity extends AppCompatActivity{
         btn_todos.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
                 obtenerTodas();
                 btn_ayer.setChecked(false);
                 btn_hoy.setChecked(false);
@@ -67,13 +66,11 @@ public class MainActivity extends AppCompatActivity{
             public void onClick(View v) {
 
                 if(btn_hoy.isChecked()){
-
                     obtenerNotasHoy();
                     lista.setAdapter(adapter);
                     btn_todos.setChecked(false);
                     btn_ayer.setChecked(false);
                     btn_tresDias.setChecked(false);
-
                 }else{
                     obtenerTodas();
                 }
@@ -85,8 +82,8 @@ public class MainActivity extends AppCompatActivity{
         btn_ayer.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(btn_ayer.isChecked()){
 
+                if(btn_ayer.isChecked()){
                     obtenerNotasAyer();
                     lista.setAdapter(adapter);
                     btn_todos.setChecked(false);
@@ -104,25 +101,22 @@ public class MainActivity extends AppCompatActivity{
         btn_tresDias.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(btn_tresDias.isChecked()){
 
+                if(btn_tresDias.isChecked()){
                     obtenerNotasTresDias();
                     lista.setAdapter(adapter);
                     btn_todos.setChecked(false);
                     btn_hoy.setChecked(false);
                     btn_ayer.setChecked(false);
-
                 }else{
                     obtenerTodas();
                 }
             }
         });
 
-
         img_ordenar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
                 count++;
                 ordenarNotas();
                 lista.setAdapter(adapter);
@@ -130,7 +124,6 @@ public class MainActivity extends AppCompatActivity{
                 btn_hoy.setChecked(false);
                 btn_ayer.setChecked(false);
                 btn_tresDias.setChecked(false);
-
             }
         });
     }
@@ -193,7 +186,7 @@ public class MainActivity extends AppCompatActivity{
                 }else{
                     query.orderByDescending("Fecha");
                 }
-                
+
                 return query;
             }
         });
