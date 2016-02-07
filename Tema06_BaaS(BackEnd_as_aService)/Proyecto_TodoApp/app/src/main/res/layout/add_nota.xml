@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android" android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:weightSum="1">
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="GUARDAR"
+        android:id="@+id/button_guardar"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentEnd="true" />
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentStart="true"
+        android:layout_marginTop="-15dp">
+
+        <DatePicker
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:scaleY="0.85"
+            android:scaleX="0.85"
+            android:layout_weight="1"
+            android:id="@+id/datePicker2"
+            android:contextClickable="true"
+            android:datePickerMode="spinner"
+            android:layout_gravity="center"/>
+
+        <TimePicker
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/timePicker"
+            android:layout_weight="1"
+            android:timePickerMode="spinner"
+            android:layout_marginTop="-70dp"
+            android:scaleY="0.7"
+            android:scaleX="0.7"
+            android:layout_gravity="center"/>
+
+    </LinearLayout>
+
+    <EditText
+        android:layout_width="match_parent"
+        android:layout_height="70dp"
+        android:minHeight="70dp"
+        android:id="@+id/editTextNota"
+        android:layout_marginLeft="10dp"
+        android:background="@drawable/fondo"
+        android:layout_marginRight="10dp"
+        android:maxHeight="70dp"
+        android:padding="7dp"
+        android:textSize="15dp"
+        android:hint="Escribe aquí..."
+        android:gravity="left|top"
+        android:layout_above="@+id/button_guardar" />
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="CERRAR"
+        android:id="@+id/button_cerrar"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentStart="true" />
+
+
+</RelativeLayout>
